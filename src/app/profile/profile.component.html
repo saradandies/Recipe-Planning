@@ -1,0 +1,41 @@
+<div class="container mt-6" style="padding-left: 50px; margin-top: 20px;">
+  <ng-container *ngIf="user$ | async as user">
+    <div class="form-container mat-elevation-z5 text-center">
+      <h1></h1>
+      <div class="profile-image mt-3 ">
+        <img
+          width="120"
+          height="120"
+          class="rounded-circle border border-dark"
+          [src]="user.photoURL ?? '/assets/profile.png'"
+          alt="Profile Picture"
+        >
+      <div class="my-3">
+        <button  class="btn btn-success mx-2  " (click)="openFollowersPopup()">Show Followers</button>
+
+
+        <button *ngIf="user.uid === currentUserUid" class="btn btn-success  mx-2 " (click)="inputField.click()">
+          change Profile Photo
+        </button>
+        <button *ngIf="user.uid !== currentUserUid" class="btn btn-success btn-sm ">
+          Follow
+        </button>
+      </div>
+      </div>
+      <input #inputField hidden type="file" (change)="uploadFile($event, user)" />
+      <div class="row row-cols-1 row-cols-md-2 g-4 mt-5" style="margin-left:50px;">
+        <div class="col" *ngFor="let recipe of recipes$ | async">
+          <div class="card h-100">
+            <img [src]="recipe.recipe_image" class="card-img-top" alt="Card Image">
+            <div class="card-body">
+              <h5 class="card-title">{{ recipe.recipe_name }}</h5>
+              <h3>Ingredients:</h3>
+              <p>{{ recipe.recipe_ingredients }}</p>
+              <a href="#" class="btn btn-success">Show More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

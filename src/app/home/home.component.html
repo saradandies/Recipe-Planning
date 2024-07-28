@@ -1,0 +1,124 @@
+<div class="col-lg-8 mx-auto" style="margin-top: 100px;">
+  <form class="d-flex" (ngSubmit)="searchRecipes()" role="search">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" [(ngModel)]="searchQuery" [ngModelOptions]="{ standalone: true }">
+      <button class="btn btn-outline-success me-2" type="submit">Search</button>
+  </form>
+  <div class="btn-group me-2">
+      <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="margin-top: 5px;">
+          Search By
+      </button>
+      <ul class="dropdown-menu">
+          <li><a class="dropdown-item" (click)="selectedCriteria = 'recipe_name'">Recipe Name</a></li>
+          <li><a class="dropdown-item" (click)="selectedCriteria = 'recipe_ingredients'">Ingredients</a></li>
+          <li><a class="dropdown-item" (click)="selectedCriteria = 'recipe_cuisine'">Cuisine</a></li>
+          <li><a class="dropdown-item" (click)="selectedCriteria = 'recipe_cookingTime'">Cooking Time</a></li>
+      </ul>
+</div>
+</div>
+<div class="container-fluid ps-0" style="padding-left: 50px; margin-top:50px;">
+    <div class="col-md-7 mx-auto ">
+      <div class="card mt-5 lon" *ngFor="let recipe of recipes">
+        <div class="d-flex align-items-center justify-content-between">
+          <h4 class="text-success ms-3 my-2">{{ recipe.postedBy }}</h4>
+          <button class="btn btn-light" (click)="saveRecipe(recipe)">
+              <i class="far fa-bookmark text-success"></i>
+          </button>
+      </div>
+       <div class="mans">
+        <img [src]="recipe.recipe_image" class="card-img-top w-100 h-100 " alt="Card Image" >
+        </div>
+        <div class="card-body">
+          <h5 class="text-success card-title">{{ recipe.recipe_name }}</h5>
+          <h5 class="text-success">Cooking Time: <span class="ms-2 ">{{recipe.recipe_cookingTime}} </span></h5>
+
+
+          <h5 class="text-success">Cusine: <span  class="ms-2 ">{{recipe.recipe_cuisine}}</span></h5>
+
+
+          <button (click)="currentUser && currentUser.uid ? likeRecipe(recipe, currentUser.uid) : null" class="btn-light border border-light" style="margin-right: 5px;">
+            <i class="far fa-thumbs-up text-success" style="margin-right: 5px;"></i>
+            <span>{{ recipe.likes }}</span>
+          </button>
+
+          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#commentModal" (click)="prepareComment(recipe.recipe_id)">Add Comment</button>
+          <div class="comments-container">
+            <div *ngFor="let comment of recipe.comments" class="media comment">
+              <div class="media-body">
+                <span class="mt-0 text-success">{{ comment.username }} : </span>
+                <span class="text-success">{{ comment.text }}</span>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button type="button" class="btn btn-success" style="margin-right:5px;"><a>Show More</a></button>
+          </div>
+          </div>
+          <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title " id="commentModalLabel">Add Comment</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <!-- Add Comment Form -->
+                  <div class="mb-3">
+                    <label for="commentText" class="form-label">Write your comment:</label>
+                    <textarea class="form-control" id="commentText" rows="3" [(ngModel)]="newCommentText"></textarea>
+                  </div>
+                  <button type="button" class="btn btn-success" (click)="addComment()">Submit Comment</button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+  <div class="position-fixed bottom-0 start-0 ml-6">
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Add New Recipe
+    </button>
+  </div>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Recipe</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="input-group mb-3">
+            <input type="file" class="form-control" id="recipeImage" (change)="onFileSelected($event)">
+            <label class="input-group-text" for="recipeImage">Upload Recipe Image</label>
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Recipe Name</label>
+            <input type="email" class="form-control" [(ngModel)]="recipe_name" id="exampleFormControlInput1">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Ingredients(Seperate with comma)</label>
+            <textarea class="form-control" [(ngModel)]="recipe_ingredients" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Steps(Seperate with comma)</label>
+            <textarea class="form-control" [(ngModel)]="recipe_steps" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Cuisine</label>
+            <input type="email" class="form-control" [(ngModel)]="recipe_cuisine" id="exampleFormControlInput1">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Cooking time</label>
+            <input type="email" class="form-control" [(ngModel)]="recipe_cookingTime" id="exampleFormControlInput1">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" (click)="addRecipe()" class="btn btn-success">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+<div class="container-fluid">
+  <div class="col-10 ml-4" style="padding-left:225px;"> <!-- Added ml-2 for shifting right by 50px -->
+    <div class="ps-0" style="margin-top:90px;">
+      <div class="position-fixed bottom-0 start-0 ml-6">
+        <button type="button" class="btn btn-success plan" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Make Your Meal Plan
+        </button>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Add Meal Plan</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <!-- Meal Plan Form -->
+              <form (ngSubmit)="addMealPlan()" #mealPlanForm="ngForm">
+                <div class="mb-3">
+                  <label for="recipeSelect" class="form-label">Select Recipe:</label>
+                  <select id="recipeSelect" class="form-select" [(ngModel)]="selectedRecipeId" name="recipeId" required>
+                    <option value="" disabled selected>Select a recipe</option>
+                    <option *ngFor="let recipe of recipes" [value]="recipe?.recipe_id">{{ recipe?.recipe_name }}</option>
+                  </select>
+                </div>
+                <!-- Day -->
+                <div class="mb-3">
+                  <label class="form-label">Day:</label>
+                  <select class="form-select" [(ngModel)]="selectedDay" name="day" required>
+                    <option value="" disabled selected>Select a day</option>
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Saturday</option>
+                    <option value="Sunday">Sunday</option>
+                  </select>
+                </div>
+                <!-- Type -->
+                <div class="mb-3">
+                  <label class="form-label">Type:</label>
+                  <select class="form-select" [(ngModel)]="selectedType" name="type" required>
+                    <option value="" disabled selected>Select a type</option>
+                    <option value="Breakfast">Breakfast</option>
+                    <option value="Lunch">Lunch</option>
+                    <option value="Dinner">Dinner</option>
+                    <option value="Snack">Snack</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-success">Add</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+          <div class="col-md-4 mb-4" *ngFor="let mealPlan of meals">
+            <div class="card" *ngIf="mealPlan.uid === userId">
+              <div class="card-body">
+                <h3 class="card-title text-success">{{ mealPlan.name }}</h3>
+                <img [src]="getRecipeImage(mealPlan.recipe_id)" class="card-img-top" alt="Recipe Image">
+                <p class="card-text">Day: {{ mealPlan.day }}</p>
+                <p class="card-text">Type: {{ mealPlan.type }}</p>
+                <button class="btn btn-success" style="margin-right:5px;">View Details</button>
+                <button class="btn btn-success" (click)="deleteMealPlan(mealPlan.id)">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+  </div>
+</div>

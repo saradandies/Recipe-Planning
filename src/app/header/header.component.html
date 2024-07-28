@@ -1,0 +1,49 @@
+<div class="container-fluid custom-container">
+  <nav class="navbar navbar-expand-lg  navbar-dark bg-dark  fixed-top">
+    <div class="container ">
+      <a class="navbar-brand logo" href="#">
+        <img src="assets/s.png" alt="logo" class="rounded-circle log" >
+      </a>
+      <div class="d-flex align-items-center justify-content-between w-100">
+        <h2 class="logoname">My Kitchen</h2>
+        <div class="d-flex   ">
+            <ul  class="nav  d-flex">
+            <!-- <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Active</a>
+            </li> -->
+            <li class="nav-item">
+              <a class="nav-link text-success" routerLink="/home">Recipes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-success" [routerLink]="['/profile', userId$ | async]">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link  text-success" routerLink="/suggest">More firends</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-success" routerLink="/save">Saved </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-success" routerLink="/shopping-list">Shopping list</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-success" routerLink="/mealplan">Meal Plan</a>
+            </li>
+    </ul>
+</div>
+
+
+
+        <div class="d-flex" >
+          <button class="btn btn-success" type="submit" (click)="logout()">Logout</button>
+
+        </div>
+
+      </div>
+
+
+
+    </div>
+  </nav>
+</div>

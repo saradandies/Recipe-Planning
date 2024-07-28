@@ -1,0 +1,28 @@
+<div class="d-flex align-items-center shadow vh-80 mt-5 justify-content-center position-fixed left-0 custom-top">
+    <ul class="nav flex-column">
+      <!-- <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">Active</a>
+      </li> -->
+      <li class="nav-item">
+        <a class="nav-link text-success" routerLink="/home">Recipes</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-success" [routerLink]="['/profile', userId$ | async]">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link  text-success" routerLink="/suggest">More firends</a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link text-success" routerLink="/save">Saved </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-success" routerLink="/shopping-list">Shopping list</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-success" routerLink="/mealplan">Meal Plan</a>
+      </li>
+    </ul>
+</div>
+
+

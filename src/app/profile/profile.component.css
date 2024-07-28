@@ -1,0 +1,21 @@
+.followers-btn {
+  background-color: rgb(41, 184, 10);
+  color: black;
+  border: none;
+ padding: 5px 9px;
+    border-radius: 5px;
+
+
+
+}
+.following-btn {
+   background-color: rgb(41, 184, 10);
+    color: black;
+    border: none;
+    padding: 5px 9px;
+    border-radius: 5px;
+
+
+
+
+}
